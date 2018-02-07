@@ -1,0 +1,289 @@
+---
+title: "Base R 1"
+author: "Haviland Wright"
+date: "January 22, 2018"
+header-includes:
+  \DeclareMathSizes{12}{12}{12}{12}
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 1. Create the vectors:
+
+ (a) (1, 2, 3, . . . , 19, 20)
+ 
+```{r}
+
+ A <- c(1:20)
+
+A
+
+```
+
+
+ (b) (20, 19, . . . , 2, 1)
+ 
+```{r}
+B <- c(20:1)
+B
+ 
+```
+
+ (c) (1, 2, 3, . . . , 19, 20, 19, 18, . . . , 2, 1)
+
+```{r}
+C <- c(A,B)
+C
+ 
+```
+ (d) assign vector c(4, 6, 3) variable name tmp
+
+ Use tmp for parts (e), (f) and (g)
+```{r}
+tmp <- c(4,6,3)
+tmp
+ 
+```
+
+
+ (e) (4, 6, 3, 4, 6, 3, . . .  , 4, 6, 3) where there are 10 occurrences of 4.
+```{r}
+E <- rep(tmp,10)
+E
+ 
+```
+
+ (f) (4, 6, 3, 4, 6, 3, . . . , 4, 6, 3, 4) where there are 11 occurrences of 4, 10 occurrences of 6 and 10 occurrences of 3.
+```{r}
+F <- rep (tmp,10,len=31)
+F
+ 
+```
+
+ (g) (4, 4, . . . , 4, 6, 6, . . .  , 6, 3, 3, . . . , 3) where there are 10 occurrences of 4, 20 occurrences of 6 and 30 occurrences of 3.
+```{r}
+g <- c(10,20,30)
+g
+
+G <- rep (tmp, times=g,each=1 )
+G
+ 
+```
+
+### 2. Create a vector of the values of
+$e^x cos(x)$ at x = 3, 3.1, 3.2, . . . ,6.
+```{r}
+x <- seq(3,6,by=.1)
+Y <- cos(x)*exp(x)
+x
+Y
+ 
+```
+
+### 3. Create the following vectors:
+
+ (a) $(0.1^3 0.1^1, 0.1^6 0.2^4, ... ,0.1^{36} 0.2{34})$
+
+```{r}
+a <- seq(3,36,by=3)
+a
+b <- seq(1,34,by=3)
+
+b
+c <- (0.1^a)*(0.2^b)
+c
+ 
+```
+
+ (b) $(2, \frac{2^2}{2}, \frac{2^3}{3}, ... ,\frac{2^{25}}{25})$
+
+```{r}
+a <- seq(1,25,by=1)
+b <- (2^a)/a
+b
+ 
+```
+
+
+### 4. Calculate the following:
+
+ (a) $\sum_{i = 10}^{100}(i^3 + 4i^2)$
+ 
+```{r}
+i <- c(10:100)
+I <- sum(i^3+4*i^2)
+I
+ 
+```
+
+ (b) $\sum_{i=1}^{25}(\frac{2^i}{i}+\frac{3^i}{i^2})$
+ 
+```{r}
+i <- c(1:25)
+I <- sum((2^i)/i+(3^i)/(i^2))
+I
+
+ 
+```
+
+
+
+### 5. Use the function paste() to create the following character vectors of length 30:
+
+ (a) ("label 1", "label 2", ....., "label 30").
+Note that there is a single space between label and the number following.
+
+```{r}
+i <- paste(c("label "), 1:30, sep="")
+i
+ 
+```
+
+ (b) ("fn1", "fn2", ..., "fn30").
+```{r}
+i <- paste(c("fn"),1:30, sep="")
+i
+ 
+```
+
+In this case, there is no space between fn and the number following.
+
+
+### 6. Execute the following lines which create two vectors of random integers which are chosen with replacement from the integers 0, 1, . . . , 999. Both vectors have length 250.
+
+set.seed(50)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
+
+Suppose $x = (x_1, x_2, . . . ,x_n)$ denotes the vector xVec and
+$y = (y_1, y_2, . .  ,y_n)$ denotes the vector yVec.
+
+
+ (a) Create the vector
+$(y_2 - x_1, . . . , y_n - x_{n-1})$.
+
+```{r}
+set.seed(50)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
+xVec
+yVec
+
+a <- yVec[2:250]-xVec[1:249]
+a
+ 
+```
+ (b) Create the vector
+$(\frac{sin(y_1)}{cos(x_2)}, \frac{sin(y_2)}{x_3}, ...,\frac{y_{n-1}}{cos(x_n)})$.
+
+```{r}
+
+b <- sin(yVec[1:249])/cos(xVec[2:250])
+b
+ 
+```
+ (c) Create the vector
+$(x_1 + 2x_2 - x_3, x_2 + 2x_3 - x_4, ..., x_{x-2} + 2x_{n-1} - x_n)$
+```{r}
+c <- xVec[1:248]+2*xVec[2:249]-xVec[3:250]
+c
+ 
+```
+ (d) Calculate
+$\sum\limits_{i=1}^{n-1} \frac{e^{-x_{i+1}}}{x_i + 10}$
+
+```{r}
+d <- sum(exp(-xVec[2:250])/(xVec[1:249]+10))
+d
+ 
+```
+
+
+
+
+### 7. This question uses the vectors xVec and yVec created in the previous question and the functions sort,
+order, mean, sqrt, sum, and abs.
+
+ (a) Pick out the values in yVec which are > 600.
+```{r}
+y <- yVec[yVec>(600)]
+y
+ 
+```
+ (b) What are the index positions in yVec of the values which are > 600?
+```{r}
+which(yVec>600)
+ 
+```
+ (c) What are the values in xVec which correspond to the values in yVec which are > 600? (By correspond, we mean at the same index positions.)
+
+```{r}
+x <- xVec[which(yVec>600)]
+x
+ 
+```
+ (d) Create the vector $(|x_1 - \bar{x}|^{1/2}, |x_2 - \bar{x}|^{1/2}, ..., |x_n - \bar{x}|^{1/2})$
+```{r}
+d <- c(abs(xVec[1:250]-mean(xVec))^(1/2))
+d
+ 
+```
+ (e) How many values in yVec are within 200 of the maximum value of the terms in yVec?
+```{r}
+ymax <- max(yVec)
+ymax
+y1 <- yVec[yVec>(797)]
+y1
+y2 <- y1[y1<(1197)]
+y2
+length(y2)
+ 
+```
+ (f) How many numbers in xVec are divisible by 2? (Note that the modulo operator is denoted \%\%.)
+```{r}
+xf1 <- xVec%%2
+xf1
+xVec
+xf2 <- xVec[xf1==(0)]
+xf2
+ 
+```
+ (g) Sort the numbers in the vector xVec in the order of increasing values in yVec.
+```{r}
+order(yVec)
+xg <- xVec[order(yVec)]
+xg
+ 
+```
+ (h) Pick out the elements in yVec at index positions 1, 4, 7, 10, 13, . . .
+
+```{r}
+i <- seq(1,250,by=3)
+i
+yh <- yVec[i]
+yh
+ 
+```
+## 8. By using the function cumprod or otherwise, calculate
+
+$1 + \frac{2}{3} + (\frac{2}{3}\frac{4}{5}) + (\frac{2}{3}\frac{4}{5}\frac{6}{7} + ... + (\frac{2}{3}\frac{4}{5} ... \frac{38}{39}))$
+
+```{r}
+i <- seq(2,38,by=2)
+i
+x <- seq(3,39,by=2)
+x
+y <- i/x
+
+list <- c()
+for(i in 1:length(y)){
+  list[i] <- prod(y[1:i])
+}
+
+final.result <- sum(list) + 1
+final.result
+ 
+```
